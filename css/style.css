@@ -430,7 +430,7 @@ nav {
 /* Header แถบสีเข้มด้านบนของทุกหน้า (ยกเว้น Home) */
 .page-header {
   background: var(--dark-roast);
-  padding: 60px 24px 50px;
+  padding: 80px 25px 50px;
   text-align: center;
 }
 
