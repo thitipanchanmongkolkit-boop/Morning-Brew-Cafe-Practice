@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <!-- menu.html — หน้า Menu -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morning Brew Cafe — Menu</title>
+  <meta name="description" content="ดูเมนูกาแฟ เครื่องดื่ม และเบเกอรี่ของ Morning Brew Cafe พร้อมราคา">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- CSS ไฟล์เดียวกันกับทุกหน้า — ทุกหน้าแชร์ style เดียวกัน -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAV — เหมือนกันทุกหน้า แต่ class="active" เปลี่ยนตามหน้าปัจจุบัน -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 20 Q6 10 14 10 Q22 10 23 20 Z" fill="none" stroke="#C68B4A" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M23 14 Q27 14 27 17 Q27 20 23 20" fill="none" stroke="#C68B4A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="4" y1="22" x2="24" y2="22" stroke="#C68B4A" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M11 7 Q11 4 13 4 Q13 6.5 11 7" fill="none" stroke="#C68B4A" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M15 6 Q15 3 17 3 Q17 5.5 15 6" fill="none" stroke="#C68B4A" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Morning Brew
+    </a>
+    <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" id="nav-home" >Home</a></li>
+    <li><a href="#" onclick="showPage('menu')" id="nav-menu" class="active">Menu</a></li>
+    <li><a href="#" onclick="showPage('about')" id="nav-about">About</a></li>
+  </ul> 
+  </nav>
+
+  <main>
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <p class="page-tag">☕ &nbsp; Handcrafted drinks & bites</p>
+      <h1 class="page-title">Our <em>Menu</em></h1>
+    </div>
+
+    <div class="menu-body">
+
+      <!-- ── Espresso & Coffee ── -->
+      <section class="menu-section">
+        <div class="menu-section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+          <h2 class="menu-section-name">Espresso & Coffee</h2>
+          <div class="menu-section-line"></div>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Espresso</div>
+              <div class="menu-item-desc">ช็อตเข้มข้น กลมกล่อม เต็มอิ่ม</div>
+            </div>
+            <div class="menu-item-price">฿50</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Americano</div>
+              <div class="menu-item-desc">เอสเปรสโซ่ผสมน้ำร้อน ดื่มง่าย</div>
+            </div>
+            <div class="menu-item-price">฿65</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Latte</div>
+              <div class="menu-item-desc">เอสเปรสโซ่ + นมสด นุ่มลิ้น</div>
+            </div>
+            <div class="menu-item-price">฿75</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Cappuccino</div>
+              <div class="menu-item-desc">โฟมนมหนา หอมกลิ่นกาแฟ</div>
+            </div>
+            <div class="menu-item-price">฿75</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Flat White</div>
+              <div class="menu-item-desc">เข้มข้นกว่า Latte เนื้อนมเนียน</div>
+            </div>
+            <div class="menu-item-price">฿80</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Mocha</div>
+              <div class="menu-item-desc">กาแฟ + ช็อกโกแลต หอมหวาน</div>
+            </div>
+            <div class="menu-item-price">฿85</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Cold & Iced ── -->
+      <section class="menu-section">
+        <div class="menu-section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 2h8l1 6H7L8 2zM7 8l-1 8a2 2 0 002 2h8a2 2 0 002-2L17 8"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
+          <h2 class="menu-section-name">Cold & Iced</h2>
+          <div class="menu-section-line"></div>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Iced Latte</div>
+              <div class="menu-item-desc">เย็นชื่นใจ นมสดเต็มๆ</div>
+            </div>
+            <div class="menu-item-price">฿80</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Cold Brew</div>
+              <div class="menu-item-desc">แช่เย็น 12 ชม. กลมเข้ม ไม่ขม</div>
+            </div>
+            <div class="menu-item-price">฿90</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Iced Matcha Latte</div>
+              <div class="menu-item-desc">ชาเขียวออร์แกนิค + นมสด</div>
+            </div>
+            <div class="menu-item-price">฿90</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Caramel Frappe</div>
+              <div class="menu-item-desc">ปั่นเนียน หอมคาราเมล</div>
+            </div>
+            <div class="menu-item-price">฿95</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Bakery & Snacks ── -->
+      <section class="menu-section">
+        <div class="menu-section-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          <h2 class="menu-section-name">Bakery & Snacks</h2>
+          <div class="menu-section-line"></div>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Butter Croissant</div>
+              <div class="menu-item-desc">อบสดใหม่ทุกเช้า เนยหอม กรอบนอกนุ่มใน</div>
+            </div>
+            <div class="menu-item-price">฿65</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Banana Bread</div>
+              <div class="menu-item-desc">กล้วยหอมอบชื้น คลาสสิคทุกเวลา</div>
+            </div>
+            <div class="menu-item-price">฿60</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Chocolate Brownie</div>
+              <div class="menu-item-desc">เข้มข้น ชุ่มฉ่ำ เนื้อฟัดจ์</div>
+            </div>
+            <div class="menu-item-price">฿65</div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-item-info">
+              <div class="menu-item-name">Cheese Cake Slice</div>
+              <div class="menu-item-desc">นิวยอร์กสไตล์ เนื้อนุ่มละมุน</div>
+            </div>
+            <div class="menu-item-price">฿85</div>
+          </div>
+        </div>
+      </section>
+
+      <p class="menu-note">
+        🥛 &nbsp;สามารถเปลี่ยนนมได้ทุกเมนู (นมโอ๊ต / นมอัลมอนด์ / นมไขมันต่ำ) &nbsp;·&nbsp; ราคาอาจเปลี่ยนแปลงตามฤดูกาล
+      </p>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-logo">Morning Brew Cafe</div>
+    <div class="footer-tagline">Every sip tells a story</div>
+    <div class="footer-copy">© 2025 Morning Brew Cafe · All rights reserved</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

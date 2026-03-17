@@ -1,0 +1,1077 @@
+/* ============================================================
+   style.css — Morning Brew Cafe
+   ============================================================
+   โครงสร้างไฟล์นี้แบ่งเป็นหัวข้อ ดังนี้:
+   1. CSS Variables (ตัวแปรสี)
+   2. Reset & Base
+   3. Navigation
+   4. Hero Section
+   5. Features Strip
+   6. Gallery
+   7. Menu Page
+   8. About / Contact Page
+   9. Contact Form
+   10. Footer
+   11. Responsive (Media Queries)
+   12. Animations / Keyframes
+   ============================================================ */
+
+
+/* ──────────────────────────────────────────
+   1. CSS VARIABLES
+   กำหนดสีทั้งหมดไว้ที่นี่จุดเดียว
+   ถ้าอยากเปลี่ยนโทนสี แก้แค่ตรงนี้พอ
+────────────────────────────────────────── */
+:root {
+  --espresso:   #2C1810;
+  --dark-roast: #3D2314;
+  --mocha:      #6B3D2A;
+  --caramel:    #C68B4A;
+  --latte:      #D4A96A;
+  --cream:      #F5ECD7;
+  --milk:       #FBF6EE;
+  --white:      #FFFDF9;
+  --text-dark:  #1E0F0A;
+  --text-mid:   #5C3D2E;
+  --text-light: #9B7355;
+}
+
+
+/* ──────────────────────────────────────────
+   2. RESET & BASE
+   ล้างค่า default ของ browser
+   และกำหนด style พื้นฐานของ body
+────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* ทำให้ padding/border ไม่บวกเพิ่มขนาด */
+}
+
+html {
+  scroll-behavior: smooth; /* เลื่อน scroll แบบนุ่มนวล */
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--white);
+  color: var(--text-dark);
+  overflow-x: hidden; /* ซ่อน scrollbar แนวนอน */
+}
+
+/* แต่ละ "หน้า" จะซ่อนอยู่ก่อน แล้ว JS จะ add class .active เมื่อคลิก nav */
+.page {
+  display: none;
+  padding-top: 64px; /* เว้นพื้นที่ให้ navbar ที่ fixed อยู่ด้านบน */
+  min-height: 100vh;
+  animation: pageFade 0.3s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+
+/* ──────────────────────────────────────────
+   3. NAVIGATION
+────────────────────────────────────────── */
+nav {
+  position: fixed; /* ติดด้านบนตลอด แม้จะ scroll */
+  top: 0; left: 0; right: 0;
+  z-index: 100; /* อยู่บนสุด */
+  background: rgba(251, 246, 238, 0.92);
+  backdrop-filter: blur(12px); /* เบลอพื้นหลังด้านหลัง nav */
+  border-bottom: 1px solid rgba(198,139,74,0.2);
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--espresso);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.nav-logo svg {
+  width: 28px;
+  height: 28px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  padding: 8px 14px;
+  border-radius: 24px;
+  transition: all 0.2s;
+}
+
+/* .active ถูก add โดย JS เมื่อหน้านั้น active */
+.nav-links a:hover,
+.nav-links a.active {
+  background: var(--caramel);
+  color: var(--white);
+}
+
+
+/* ──────────────────────────────────────────
+   4. HERO SECTION (หน้า Home)
+────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: var(--dark-roast);
+}
+
+/* Gradient overlay สร้างบรรยากาศด้วย radial gradient ซ้อนกัน */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(198,139,74,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(212,169,106,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(107,61,42,0.4) 0%, transparent 50%);
+}
+
+/* SVG illustration ขนาดใหญ่ที่ซ่อนอยู่มุมขวาล่าง */
+.hero-illustration {
+  position: absolute;
+  right: -40px;
+  bottom: -20px;
+  opacity: 0.08;
+  width: 420px;
+  height: 420px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2; /* อยู่บน hero-bg */
+  text-align: center;
+  padding: 40px 24px;
+  animation: fadeUp 1s ease both;
+}
+
+.hero-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--latte);
+  margin-bottom: 20px;
+  animation: fadeUp 1s 0.1s ease both; /* delay 0.1s */
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 8vw, 5.5rem); /* clamp = min, preferred, max */
+  line-height: 1.05;
+  color: var(--cream);
+  margin-bottom: 8px;
+  animation: fadeUp 1s 0.2s ease both;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--latte);
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: rgba(213,169,106,0.7);
+  margin-bottom: 40px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  animation: fadeUp 1s 0.35s ease both;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--caramel);
+  color: var(--white);
+  text-decoration: none;
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+  animation: fadeUp 1s 0.5s ease both;
+}
+
+.hero-cta:hover {
+  background: var(--latte);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(198,139,74,0.4);
+}
+
+.hero-cta svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Steam Animation ── */
+.steam-wrap {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  animation: fadeUp 1s 0.6s ease both;
+}
+
+.steam-cup {
+  position: relative;
+}
+
+.steam-line {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(to top, rgba(212,169,106,0.6), transparent);
+  border-radius: 2px;
+  animation: steam 2s ease-in-out infinite;
+}
+
+.steam-line:nth-child(1) { left: 35%; height: 24px; animation-delay: 0s; }
+.steam-line:nth-child(2) { left: 50%; height: 32px; animation-delay: 0.4s; }
+.steam-line:nth-child(3) { left: 65%; height: 20px; animation-delay: 0.8s; }
+
+.cup-icon {
+  width: 72px;
+  height: 72px;
+  color: var(--latte);
+}
+
+
+/* ──────────────────────────────────────────
+   5. FEATURES STRIP
+────────────────────────────────────────── */
+.features-strip {
+  background: var(--cream);
+  padding: 40px 24px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  border-bottom: 1px solid rgba(198,139,74,0.15);
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-mid);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.feature-item svg {
+  color: var(--caramel);
+  width: 20px;
+  height: 20px;
+}
+
+
+/* ──────────────────────────────────────────
+   6. GALLERY (หน้า Home)
+────────────────────────────────────────── */
+.gallery-section {
+  background: var(--white);
+  padding: 60px 24px 72px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.gallery-header .section-eyebrow {
+  margin-bottom: 8px;
+}
+
+.gallery-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--espresso);
+  line-height: 1.15;
+}
+
+.gallery-title em {
+  font-style: italic;
+  color: var(--mocha);
+}
+
+/* Grid แบบ asymmetric: รูปซ้ายใหญ่ข้ามสองแถว */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 220px 200px;
+  gap: 12px;
+}
+
+.gallery-item {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background: var(--cream);
+  cursor: pointer;
+}
+
+/* รูปแรกข้ามสองแถว (tall card ด้านซ้าย) */
+.gallery-item:first-child {
+  grid-row: 1 / 3;
+  border-radius: 20px;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.06);
+}
+
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(44,24,16,0.55) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+
+.gallery-item:hover .gallery-item-overlay {
+  opacity: 1;
+}
+
+.gallery-item-label {
+  color: var(--cream);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gallery-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--cream) 0%, #E8D5B0 100%);
+  color: var(--text-light);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 16px;
+}
+
+.gallery-placeholder svg {
+  color: var(--caramel);
+  opacity: 0.6;
+}
+
+.gallery-tip {
+  margin-top: 20px;
+  background: rgba(198,139,74,0.07);
+  border: 1px dashed rgba(198,139,74,0.3);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  text-align: center;
+  line-height: 1.6;
+}
+
+
+/* ──────────────────────────────────────────
+   7. MENU PAGE
+────────────────────────────────────────── */
+
+/* Header แถบสีเข้มด้านบนของทุกหน้า (ยกเว้น Home) */
+.page-header {
+  background: var(--dark-roast);
+  padding: 60px 24px 50px;
+  text-align: center;
+}
+
+.page-tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--latte);
+  margin-bottom: 12px;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: var(--cream);
+  line-height: 1.1;
+}
+
+.page-title em {
+  font-style: italic;
+  color: var(--latte);
+}
+
+.menu-body {
+  background: var(--milk);
+  padding: 48px 24px 80px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.menu-section {
+  margin-bottom: 52px;
+}
+
+.menu-section-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.menu-section-label svg {
+  color: var(--caramel);
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.menu-section-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--espresso);
+  letter-spacing: 0.01em;
+}
+
+/* เส้นยาวท้ายหัวข้อ section */
+.menu-section-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(198,139,74,0.4), transparent);
+}
+
+/* Grid รายการเมนู — auto-fill คือใส่ให้เต็มแถว ขั้นต่ำ 280px */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.menu-card {
+  background: var(--white);
+  border: 1px solid rgba(198,139,74,0.12);
+  border-radius: 16px;
+  padding: 20px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* เส้นสีซ้ายที่ปรากฏเมื่อ hover โดยใช้ pseudo-element ::before */
+.menu-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--caramel);
+  border-radius: 3px 0 0 3px;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.menu-card:hover {
+  border-color: rgba(198,139,74,0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(44,24,16,0.08);
+}
+
+.menu-card:hover::before {
+  opacity: 1;
+}
+
+.menu-item-info {
+  flex: 1;
+}
+
+.menu-item-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--espresso);
+  margin-bottom: 4px;
+}
+
+.menu-item-desc {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.menu-item-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--caramel);
+  font-weight: 600;
+  margin-left: 16px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.menu-note {
+  margin-top: 32px;
+  background: rgba(198,139,74,0.08);
+  border: 1px dashed rgba(198,139,74,0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 0.82rem;
+  color: var(--text-mid);
+  text-align: center;
+  line-height: 1.6;
+}
+
+
+/* ──────────────────────────────────────────
+   8. ABOUT / CONTACT PAGE
+────────────────────────────────────────── */
+.about-body {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.story-block {
+  margin-bottom: 48px;
+}
+
+/* ใช้ซ้ำได้ทั้ง Menu และ About page */
+.section-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 10px;
+}
+
+.section-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  color: var(--espresso);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.section-heading em {
+  font-style: italic;
+  color: var(--mocha);
+}
+
+.story-text {
+  font-size: 0.97rem;
+  color: var(--text-mid);
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+/* เส้น divider ตกแต่ง */
+.divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to right, var(--caramel), var(--latte));
+  border-radius: 2px;
+  margin: 32px 0;
+}
+
+.info-cards {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  margin-bottom: 48px;
+}
+
+.info-card {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 24px 20px;
+  border: 1px solid rgba(198,139,74,0.15);
+}
+
+.info-card-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--caramel);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  color: white;
+}
+
+.info-card-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.info-card-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-light);
+  margin-bottom: 6px;
+}
+
+.info-card-value {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--espresso);
+  line-height: 1.5;
+}
+
+.info-card-value a {
+  color: var(--caramel);
+  text-decoration: none;
+}
+
+/* ── Action Buttons ── */
+.action-btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  flex: 1;
+  min-width: 160px;
+  justify-content: center;
+  font-family: 'Lato', sans-serif;
+}
+
+.action-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.action-btn-call {
+  background: var(--caramel);
+  color: var(--white);
+  box-shadow: 0 4px 16px rgba(198,139,74,0.3);
+}
+
+.action-btn-call:hover {
+  background: var(--espresso);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(44,24,16,0.25);
+}
+
+.action-btn-map {
+  background: var(--espresso);
+  color: var(--cream);
+}
+
+.action-btn-map:hover {
+  background: var(--mocha);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(44,24,16,0.2);
+}
+
+/* ── Map ── */
+.map-wrap {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid rgba(198,139,74,0.2);
+  margin-bottom: 24px;
+}
+
+.map-placeholder {
+  background: linear-gradient(135deg, var(--cream) 0%, #EDE0C4 100%);
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  padding: 24px;
+}
+
+.map-placeholder svg {
+  color: var(--caramel);
+  width: 40px;
+  height: 40px;
+}
+
+.map-placeholder p {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+
+.map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--espresso);
+  color: var(--cream);
+  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.map-btn:hover {
+  background: var(--caramel);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(44,24,16,0.2);
+}
+
+.map-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Hours Table ── */
+.hours-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hours-table tr {
+  border-bottom: 1px solid rgba(198,139,74,0.12);
+}
+
+.hours-table tr:last-child {
+  border-bottom: none;
+}
+
+.hours-table td {
+  padding: 10px 4px;
+  font-size: 0.9rem;
+  color: var(--text-mid);
+}
+
+.hours-table td:first-child {
+  font-weight: 700;
+  color: var(--espresso);
+}
+
+.hours-table td:last-child {
+  text-align: right;
+}
+
+.open-badge {
+  display: inline-block;
+  background: rgba(74,160,74,0.1);
+  color: #3a7a3a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(74,160,74,0.25);
+  margin-left: 8px;
+}
+
+
+/* ──────────────────────────────────────────
+   9. CONTACT FORM
+────────────────────────────────────────── */
+.contact-form-section {
+  margin-top: 8px;
+}
+
+.form-card {
+  background: var(--cream);
+  border: 1px solid rgba(198,139,74,0.2);
+  border-radius: 20px;
+  padding: 32px 28px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+
+.form-input,
+.form-textarea {
+  background: var(--white);
+  border: 1.5px solid rgba(198,139,74,0.2);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+/* Focus ring — accessibility สำคัญมาก ไม่ควรลบ */
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--caramel);
+  box-shadow: 0 0 0 3px rgba(198,139,74,0.12);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 96px;
+  margin-bottom: 14px;
+}
+
+.form-submit {
+  width: 100%;
+  padding: 15px 24px;
+  background: var(--caramel);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.form-submit:hover {
+  background: var(--espresso);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(44,24,16,0.2);
+}
+
+.form-submit svg {
+  width: 18px;
+  height: 18px;
+}
+
+.form-success {
+  display: none;
+  background: rgba(74,160,74,0.08);
+  border: 1.5px solid rgba(74,160,74,0.3);
+  border-radius: 14px;
+  padding: 20px 24px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* JS จะ add class .show เมื่อ submit สำเร็จ */
+.form-success.show {
+  display: block;
+  animation: fadeUp 0.4s ease;
+}
+
+.form-success-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.form-success p {
+  font-size: 0.9rem;
+  color: #3a7a3a;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+
+/* ──────────────────────────────────────────
+   10. FOOTER
+────────────────────────────────────────── */
+footer {
+  background: var(--espresso);
+  padding: 40px 24px 32px;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--latte);
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  font-size: 0.78rem;
+  color: rgba(212,169,106,0.5);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.social-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(212,169,106,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--latte);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.25s;
+}
+
+.social-btn:hover {
+  background: var(--caramel);
+  border-color: var(--caramel);
+  color: white;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: rgba(212,169,106,0.35);
+}
+
+
+/* ──────────────────────────────────────────
+   11. RESPONSIVE (Media Queries)
+   ปรับ layout ให้รองรับมือถือ
+   หลักการ: เขียน desktop ก่อน แล้ว override ด้วย max-width
+────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .nav-links a       { padding: 7px 10px; font-size: 0.75rem; }
+  .hero-content      { padding: 32px 20px; }
+  .menu-grid         { grid-template-columns: 1fr; }
+  .info-cards        { grid-template-columns: 1fr 1fr; }
+  .features-strip    { gap: 20px; }
+  .form-row          { grid-template-columns: 1fr; }
+  .action-btn        { min-width: 140px; }
+}
+
+@media (max-width: 540px) {
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 160px 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 380px) {
+  .info-cards { grid-template-columns: 1fr; }
+}
+
+
+/* ──────────────────────────────────────────
+   12. ANIMATIONS / KEYFRAMES
+────────────────────────────────────────── */
+
+/* เลื่อนขึ้นพร้อม fade-in — ใช้กับ hero text และ page transition */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ไอน้ำกาแฟ */
+@keyframes steam {
+  0%   { opacity: 0; transform: translateY(8px)  scaleX(1);   }
+  50%  { opacity: 1; transform: translateY(-8px) scaleX(1.5); }
+  100% { opacity: 0; transform: translateY(-20px) scaleX(0.5); }
+}
+
+/* Page transition เมื่อเปลี่ยนหน้า */
+@keyframes pageFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
