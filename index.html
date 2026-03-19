@@ -262,7 +262,7 @@
 
   .menu-section-label {
     display: flex; align-items: center; gap: 14px;
-    margin-bottom: 24px;
+    margin-bottom: 24px; 
   }
 
   .menu-section-label svg { color: var(--caramel); width: 22px; height: 22px; flex-shrink: 0; }
@@ -862,9 +862,9 @@
   </div>
  
   <ul class="nav-links">
-    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
-    <li><a href="#" onclick="showPage('menu')" id="nav-menu">Menu</a></li>
-    <li><a href="#" onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="about.html">About</a></li>
   </ul> 
 </nav>
 
@@ -884,10 +884,10 @@
       <p class="hero-eyebrow">☕ &nbsp; Crafted with love, served with warmth</p>
       <h1 class="hero-title">Morning<br><em>Brew Cafe</em></h1>
       <p class="hero-sub">เริ่มต้นทุกวันด้วยกาแฟดีๆ และบรรยากาศอบอุ่น</p>
-      <button class="hero-cta" onclick="showPage('menu')">
+      <a class="hero-cta" href="menu.html">
         ดูเมนูของเรา
         <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
-      </button>
+      </a>
     </div>
 
     <div class="steam-wrap">

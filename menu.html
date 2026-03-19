@@ -56,9 +56,9 @@
   <nav>
     <a href="index.html" class="nav-logo">Morning Brew</a>
     <ul class="nav-links">
-      <li><a href="#" onclick="showPage('home')">Home</a></li>
-      <li><a href="#" onclick="showPage('menu')" class="active">Menu</a></li>
-      <li><a href="#" onclick="showPage('about')">About</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html" class="active">Menu</a></li>
+      <li><a href="about.html">About</a></li>
     </ul> 
   </nav>
 
@@ -185,41 +185,75 @@
     <div class="footer-copy">© 2025 Morning Brew Cafe · All rights reserved</div>
   </footer>
 
-  <script>
+<script>
     let cart = [];
-    let currentSelect = { name: '', price: 0, qty: 1 };
+    let currentSelect = { name: '', price: 0, qty: 1, basePrice: 0 };
 
     function openOrder(name, price) {
-      currentSelect = { name, price, qty: 1 };
+      // เก็บราคาพื้นฐานไว้คำนวณ (basePrice)
+      currentSelect = { name, price: price, qty: 1, basePrice: price };
+      
       document.getElementById('modalName').innerText = name;
-      document.getElementById('modalPrice').innerText = '฿' + price;
-      document.getElementById('qtyDisplay').innerText = 1;
+      updateModalUI(); // แยก Logic การแสดงผลออกมา
       document.getElementById('orderModal').style.display = 'flex';
     }
 
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function closeModal(id) { 
+      document.getElementById(id).style.display = 'none'; 
+    }
 
     function updateQty(num) {
       currentSelect.qty += num;
       if (currentSelect.qty < 1) currentSelect.qty = 1;
+      
+      // อัปเดตราคาตามจำนวนจริง
+      currentSelect.price = currentSelect.basePrice * currentSelect.qty;
+      updateModalUI();
+    }
+
+    function updateModalUI() {
+      document.getElementById('modalPrice').innerText = '฿' + currentSelect.price;
       document.getElementById('qtyDisplay').innerText = currentSelect.qty;
     }
 
     function addToCart() {
-      const exist = cart.find(i => i.name === currentSelect.name);
-      if (exist) { exist.qty += currentSelect.qty; exist.total = exist.qty * exist.price; }
-      else { cart.push({ ...currentSelect, total: currentSelect.price * currentSelect.qty }); }
-      updateUI();
+      // ตรวจสอบว่ามีของในตะกร้าหรือยัง (ใช้ชื่อเป็น Key)
+      const existIndex = cart.findIndex(i => i.name === currentSelect.name);
+      
+      if (existIndex > -1) {
+        cart[existIndex].qty += currentSelect.qty;
+        cart[existIndex].total = cart[existIndex].qty * cart[existIndex].basePrice;
+      } else {
+        cart.push({ 
+          name: currentSelect.name, 
+          price: currentSelect.basePrice, // ราคาต่อหน่วย
+          qty: currentSelect.qty, 
+          total: currentSelect.price, // ราคารวมของรายการนี้
+          basePrice: currentSelect.basePrice 
+        });
+      }
+      
+      updateCartBadge();
       closeModal('orderModal');
+      
+      // Animation เล็กๆ ให้รู้ว่าของเข้าตะกร้าแล้ว (Optional)
+      const icon = document.getElementById('cartIcon');
+      icon.style.transform = 'scale(1.2)';
+      setTimeout(() => icon.style.transform = 'scale(1)', 200);
     }
 
-    function updateUI() {
+    function updateCartBadge() {
       const icon = document.getElementById('cartIcon');
       const badge = document.getElementById('cartCountBadge');
-      if (cart.length > 0) {
+      
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      
+      if (totalItems > 0) {
         icon.style.display = 'flex';
-        badge.innerText = cart.reduce((s, i) => s + i.qty, 0);
-      } else { icon.style.display = 'none'; }
+        badge.innerText = totalItems;
+      } else {
+        icon.style.display = 'none';
+      }
     }
 
     function openCheckout() {
@@ -228,19 +262,54 @@
       let html = '';
       let grandTotal = 0;
 
-      cart.forEach(item => {
-        html += `<div class="order-item"><span>${item.name} x ${item.qty}</span><span>฿${item.total}</span></div>`;
-        grandTotal += item.total;
-      });
+      if (cart.length === 0) {
+        html = '<div style="text-align:center; padding:20px; color:#999;">ตะกร้าว่างเปล่า...</div>';
+      } else {
+        cart.forEach((item, index) => {
+          html += `
+            <div class="order-item">
+              <div>
+                <span style="font-weight:700;">${item.name}</span><br>
+                <small style="color:#888;">฿${item.basePrice} x ${item.qty}</small>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span>฿${item.total}</span>
+                <button onclick="removeItem(${index})" style="background:none; border:none; color:#ff4444; cursor:pointer; font-size:1.2rem;">&times;</button>
+              </div>
+            </div>`;
+          grandTotal += item.total;
+        });
+      }
 
-      listContainer.innerHTML = html || '<p style="text-align:center; color:#ccc;">Empty Cart</p>';
+      listContainer.innerHTML = html;
       totalDisplay.innerText = '฿' + grandTotal;
       document.getElementById('checkoutModal').style.display = 'flex';
     }
 
+    // ฟังก์ชันลบสินค้าเฉพาะรายการในหน้า Checkout
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCartBadge();
+      openCheckout(); // Refresh หน้าต่าง Checkout
+    }
+
     function finalCheckout() {
-      alert("🎉 สั่งซื้อสำเร็จ! ออเดอร์ของคุณถูกส่งไปยังบาริสต้าแล้ว");
-      cart = []; updateUI(); closeModal('checkoutModal');
+      if (cart.length === 0) return alert("กรุณาเลือกสินค้าก่อนสั่งซื้อครับ");
+      
+      const grandTotal = cart.reduce((s, i) => s + i.total, 0);
+      alert(`🎉 สั่งซื้อสำเร็จ!\nยอดชำระทั้งหมด: ฿${grandTotal}\nออเดอร์ถูกส่งไปยังบาริสต้าแล้วครับ`);
+      
+      cart = []; 
+      updateCartBadge(); 
+      closeModal('checkoutModal');
+    }
+    
+    // ปิด Modal เมื่อคลิกพื้นหลังสีดำ
+    window.onclick = function(event) {
+      if (event.target.className === 'modal-overlay') {
+        closeModal('orderModal');
+        closeModal('checkoutModal');
+      }
     }
   </script>
 </body>
